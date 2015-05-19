@@ -1,0 +1,138 @@
+﻿@model List<UI.WEB.ViewModel.HostVm>
+@{
+    ViewBag.Title = "Lista hostów";
+}
+@if (Model != null)
+{
+    <h2>
+        Lista hostów
+        <input type="button" value="+ Dodaj nowy" class="btn btn-success pull-right" onclick="location.href='@Url.Action("Add", "Home")'" />
+    </h2>
+    <table class="table" border="0">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa hosta
+                </th>
+                <th>
+                    Addres hosta
+                </th>
+                <th>
+                    E-mail do administratora.
+                </th>
+                <th style="width:15%">
+                    Częstotliwość zapytań (w minutach)
+                </th>
+                <th style="width:18%">
+                    Częstotliwość weryfikacji odpowiedzi (w sekundach)
+                </th>
+                <th align="right">
+                    Status
+                </th>
+                <th>
+                    Edycja
+                </th>
+                <th>
+                    Kasowanie
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                var stringMsg = "return confirm('Czy aby napewno skasować: " + p.HostAddress + " z listy odpytań?');";
+                if (p.HostId % 2 == 0)
+                {
+                    <tr style="background: #d4d4d4">
+                        <td>
+                            @p.HostName
+                        </td>
+                        <td>
+                            @p.HostAddress
+                        </td>
+                        <td>
+                            @p.AdminEmail
+                        </td>
+                        <td align="center">
+                            @p.FrequencyRequest
+                        </td>
+                        <td align="center">
+                            @p.IntervalRequest
+                        </td>
+                        @if (p.Status == UI.WEB.ViewModel.StatusFlag.Work)
+                        {
+                            <td align="center">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </td>
+                        }
+                        else if (p.Status == UI.WEB.ViewModel.StatusFlag.Stop)
+                        {
+                            <td align="center">
+                                <strong>
+                                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                    @Html.ActionLink("Uruchom ponownie", "RefresStatus", new { nameHost = @p.HostName }, null)
+                                </strong>
+                            </td>
+                        }
+                        <td align="center">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            @Html.ActionLink("Edytuj", "Edit", new { nameHost = @p.HostName })
+                        </td>
+                        <td align="center">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            @Html.ActionLink("Usuń", "Del", new { nameHost = @p.HostName }, new { onclick = stringMsg })
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="background: #f2ecec">
+                        <td>
+                            @p.HostName
+                        </td>
+                        <td>
+                            @p.HostAddress
+                        </td>
+                        <td>
+                            @p.AdminEmail
+                        </td>
+                        <td align="center">
+                            @p.FrequencyRequest
+                        </td>
+                        <td align="center">
+                            @p.IntervalRequest
+                        </td>
+                        @if (p.Status == UI.WEB.ViewModel.StatusFlag.Work)
+                        {
+                            <td align="center">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </td>
+                        }
+                        else if (p.Status == UI.WEB.ViewModel.StatusFlag.Stop)
+                        {
+                            <td align="center">
+                                <strong>
+                                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                    @Html.ActionLink("Uruchom ponownie", "RefresStatus", new { nameHost = @p.HostName }, null)
+                                </strong>
+                            </td>
+                        }
+                        <td align="center">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            @Html.ActionLink("Edytuj", "Edit", new { nameHost = @p.HostName })
+                        </td>
+                        <td align="center">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            @Html.ActionLink("Usuń", "Del", new { nameHost = @p.HostName }, new { onclick = stringMsg })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <br />
+    <h3 class="text-danger">Brak hostów do sprawdzenia, @Html.ActionLink("dodaj nowego hosta", "Add")</h3>
+}

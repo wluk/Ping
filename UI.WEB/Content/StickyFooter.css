@@ -1,0 +1,107 @@
+﻿/* Sticky footer styles */
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#wrap {
+    height: auto;
+    margin: 0 auto -30px;
+    min-height: 100%;
+    padding: 0 0 25px;
+}
+
+#footer {
+    height: 150px;
+}
+
+#wrap > .container {
+    padding: 26px 15px 0;
+}
+
+.container .text-muted {
+    margin: 15px 0;
+}
+
+#footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+    .dropdown-submenu > .dropdown-menu {
+        -moz-border-radius: 0 6px 6px 6px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        border-radius: 0 6px 6px 6px;
+        left: 100%;
+        margin-left: -1px;
+        margin-top: -6px;
+        top: 0;
+    }
+
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a:after {
+        border-color: transparent;
+        border-left-color: #cccccc;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        content: " ";
+        display: block;
+        float: right;
+        height: 0;
+        margin-right: -10px;
+        margin-top: 5px;
+        width: 0;
+    }
+
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #ffffff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+        .dropdown-submenu.pull-left > .dropdown-menu {
+            -moz-border-radius: 6px 0 6px 6px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+            left: -100%;
+            margin-left: 10px;
+        }
+
+.navbar-wrapper {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 20;
+}
+
+    .navbar-wrapper > .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .navbar-wrapper .navbar {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+        .navbar-wrapper .navbar .container {
+            width: auto;
+        }
+/* Sticky footer styles END*/
