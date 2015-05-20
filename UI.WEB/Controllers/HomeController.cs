@@ -1,24 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Services;
+using Services.DTO;
 using UI.WEB.ViewModel;
-using StatusFlag = Services.StatusFlag;
-using System.Linq;
+using StatusFlag = UI.WEB.ViewModel.StatusFlag;
 
 namespace UI.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
-        {
-            //Settings.CreateSettings(new SetUp { GlobalInterval = 20, RequestInterval = 10 });
-        }
-
         public ActionResult Index()
         {
             var hosts = HostFileOperation.GetAllHosts().OrderByDescending(x => x.HostStatus).ToList();
 
-            if (hosts == null) return View();
+            if (hosts.Count() == 0) return View();
             var model = new List<HostVm>();
             var i = 1;
             foreach (var h in hosts)
@@ -30,7 +26,7 @@ namespace UI.WEB.Controllers
                     HostId = i,
                     FrequencyRequest = h.FrequencyRequest,
                     IntervalRequest = h.IntervalRequest,
-                    Status = (ViewModel.StatusFlag)h.HostStatus,
+                    Status = (StatusFlag)h.HostStatus,
                     HostName = h.HostName
                 };
                 i++;
@@ -49,13 +45,13 @@ namespace UI.WEB.Controllers
         public ActionResult Add(HostVm model)
         {
             if (!ModelState.IsValid) return View(model);
-            var newHost = new Host()
+            var newHost = new Host
             {
                 HostName = model.HostName,
                 AdminEmail = model.AdminEmail,
                 HostAddress = model.HostAddress,
                 FrequencyRequest = model.FrequencyRequest,
-                HostStatus = StatusFlag.Work,
+                HostStatus = Services.DTO.StatusFlag.Work,
                 IntervalRequest = model.IntervalRequest
             };
             HostFileOperation.Create(newHost);
@@ -72,7 +68,7 @@ namespace UI.WEB.Controllers
                 AdminEmail = host.AdminEmail,
                 FrequencyRequest = host.FrequencyRequest,
                 HostAddress = host.HostAddress,
-                Status = (ViewModel.StatusFlag)host.HostStatus,
+                Status = (StatusFlag)host.HostStatus,
                 IntervalRequest = host.IntervalRequest
             });
         }
@@ -81,11 +77,11 @@ namespace UI.WEB.Controllers
         public ActionResult Edit(HostVm model, string oldHost)
         {
             if (!ModelState.IsValid) return View(model);
-            var newHost = new Host()
+            var newHost = new Host
             {
                 HostName = model.HostName,
                 IntervalRequest = model.IntervalRequest,
-                HostStatus = (StatusFlag)model.Status,
+                HostStatus = (Services.DTO.StatusFlag)model.Status,
                 AdminEmail = model.AdminEmail,
                 FrequencyRequest = model.FrequencyRequest,
                 HostAddress = model.HostAddress
@@ -102,7 +98,7 @@ namespace UI.WEB.Controllers
 
         public ActionResult RefresStatus(string nameHost)
         {
-            HostFileOperation.UpdateStatus(nameHost, StatusFlag.Work);
+            HostFileOperation.UpdateStatus(nameHost, Services.DTO.StatusFlag.Work);
             return RedirectToAction("Index");
         }
     }

@@ -1,4 +1,5 @@
-﻿@model List<UI.WEB.ViewModel.HostVm>
+﻿@using UI.WEB.ViewModel
+@model List<UI.WEB.ViewModel.HostVm>
 @{
     ViewBag.Title = "Lista hostów";
 }
@@ -26,7 +27,7 @@
                 <th style="width:18%">
                     Częstotliwość weryfikacji odpowiedzi (w sekundach)
                 </th>
-                <th align="right">
+                <th style="width:8%">
                     Status
                 </th>
                 <th>
@@ -59,13 +60,13 @@
                         <td align="center">
                             @p.IntervalRequest
                         </td>
-                        @if (p.Status == UI.WEB.ViewModel.StatusFlag.Work)
+                        @if (p.Status == StatusFlag.Work)
                         {
                             <td align="center">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </td>
                         }
-                        else if (p.Status == UI.WEB.ViewModel.StatusFlag.Stop)
+                        else if (p.Status == StatusFlag.Stop)
                         {
                             <td align="center">
                                 <strong>
@@ -102,18 +103,18 @@
                         <td align="center">
                             @p.IntervalRequest
                         </td>
-                        @if (p.Status == UI.WEB.ViewModel.StatusFlag.Work)
+                        @if (p.Status == StatusFlag.Work)
                         {
                             <td align="center">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </td>
                         }
-                        else if (p.Status == UI.WEB.ViewModel.StatusFlag.Stop)
+                        else if (p.Status == StatusFlag.Stop)
                         {
-                            <td align="center">
+                            <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                                    @Html.ActionLink("Uruchom ponownie", "RefresStatus", new { nameHost = @p.HostName }, null)
+                                    @Html.ActionLink("Uruchom ponownie", "RefresStatus", new {nameHost = @p.HostName}, null)
                                 </strong>
                             </td>
                         }

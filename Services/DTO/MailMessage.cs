@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Services.DTO
 {
     public class MailMessage

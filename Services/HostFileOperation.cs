@@ -2,16 +2,17 @@
 using System.IO;
 using System.Linq;
 using System.Xaml;
+using Services.DTO;
 
 namespace Services
 {
     public static class HostFileOperation
     {
-        private static string _path = @"/Hosts/";
+        const string Path = @"/Hosts/";
 
         public static void Create(Host host)
         {
-            var hostFileName = _path + host.HostName + ".xaml";
+            var hostFileName = Path + host.HostName + ".xaml";
             using (TextWriter writer = File.CreateText(hostFileName))
             {
                 XamlServices.Save(writer, host);
@@ -24,7 +25,7 @@ namespace Services
             var fileName = hostName + "*.xaml";
 
             ScheduledTasks.StopJob(hostName);
-            var file = Directory.GetFiles(_path, fileName);
+            var file = Directory.GetFiles(Path, fileName);
             File.Delete(file[0]);
         }
 
@@ -44,8 +45,8 @@ namespace Services
 
         public static List<Host> GetAllHosts()
         {
-            var fileList = Directory.GetFiles(_path, "*.xaml");
-            if (fileList.Count() == 0) return null;
+            var fileList = Directory.GetFiles(Path, "*.xaml");
+            if (fileList.Count() == 0) return new List<Host>();
             var hosts = new List<Host>();
             foreach (var name in fileList)
             {
@@ -60,7 +61,7 @@ namespace Services
 
         public static Host GetByNameHost(string hostName)
         {
-            var file = Directory.GetFiles(_path, hostName + "*.xaml");
+            var file = Directory.GetFiles(Path, hostName + "*.xaml");
             if (file.Count() == 0) return null;
             using (TextReader reader = File.OpenText(file[0]))
             {

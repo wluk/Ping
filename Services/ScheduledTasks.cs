@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Quartz;
 using Quartz.Impl;
+using Services.DTO;
 using Services.JOB;
 
 namespace Services
@@ -23,7 +24,7 @@ namespace Services
             _sched.Start();
         }
 
-        public void TasksRegister(List<Host> hosts)
+        public static void TasksRegister(List<Host> hosts)
         {
             foreach (var h in hosts)
             {

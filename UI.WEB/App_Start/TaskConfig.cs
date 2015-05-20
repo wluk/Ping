@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Services;
+﻿using Services;
 
 namespace UI.WEB
 {
@@ -9,8 +8,7 @@ namespace UI.WEB
         {
             var hosts = HostFileOperation.GetAllHosts();
             if (hosts == null) return;
-            var scheduledTask = new ScheduledTasks();
-            scheduledTask.TasksRegister(hosts);
+            ScheduledTasks.TasksRegister(hosts);
         }
     }
 }
