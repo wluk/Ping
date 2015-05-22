@@ -10,8 +10,17 @@ namespace Services
     {
         const string Path = @"/Hosts/";
 
+        private static void folderExist()
+        {
+            if (!Directory.Exists(Path))
+            {
+                Directory.CreateDirectory(Path);
+            }
+        }
+
         public static void Create(Host host)
         {
+            folderExist();
             var hostFileName = Path + host.HostName + ".xaml";
             using (TextWriter writer = File.CreateText(hostFileName))
             {
@@ -45,6 +54,7 @@ namespace Services
 
         public static List<Host> GetAllHosts()
         {
+            folderExist();
             var fileList = Directory.GetFiles(Path, "*.xaml");
             if (fileList.Count() == 0) return new List<Host>();
             var hosts = new List<Host>();
